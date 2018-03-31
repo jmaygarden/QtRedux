@@ -75,8 +75,16 @@ typedef std::function<StateCreator(StateCreator)> Enhancer;
 
 QTREDUXSHARED_EXPORT std::unique_ptr<Store> createStore(
     Reducer reducer,
-    State preloadedState = State(),
-    Enhancer enhancer = nullptr);
+    State preloadedState = State());
+
+QTREDUXSHARED_EXPORT std::unique_ptr<Store> createStore(
+    Reducer reducer,
+    State preloadedState,
+    Enhancer enhancer);
+
+QTREDUXSHARED_EXPORT std::unique_ptr<Store> createStore(
+    Reducer reducer,
+    Enhancer enhancer);
 
 QTREDUXSHARED_EXPORT Reducer combineReducers(Reducers reducers);
 

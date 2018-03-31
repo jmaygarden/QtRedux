@@ -5,8 +5,8 @@ namespace QtRedux
 
 Store::Store(Reducer reducer, State preloadedState)
     : QObject()
-    , reducer(reducer)
-    , state(preloadedState)
+    , reducer(std::move(reducer))
+    , state(std::move(preloadedState))
 {
 }
 
@@ -25,15 +25,25 @@ void Store::replaceReducer(Reducer nextReducer)
 
 std::unique_ptr<Store> createStore(
     Reducer reducer,
+    State preloadedState)
+{
+    return std::unique_ptr<Store>(new Store(reducer, preloadedState));
+}
+
+std::unique_ptr<Store> createStore(
+    Reducer reducer,
     State preloadedState,
     Enhancer enhancer)
 {
-    auto createStore = [](Reducer reducer, State preloadedState)
-    {
-        return std::unique_ptr<Store>(new Store(reducer, preloadedState));
-    };
+    return enhancer(static_cast<std::unique_ptr<Store>(*)(Reducer, State)>
+        (createStore))(reducer, preloadedState);
+}
 
-	return (enhancer ? enhancer(createStore) : createStore)(reducer, preloadedState);
+std::unique_ptr<Store> createStore(
+    Reducer reducer,
+    Enhancer enhancer)
+{
+    return createStore(reducer, State(), enhancer);
 }
 
 Reducer combineReducers(Reducers reducers)
