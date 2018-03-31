@@ -12,14 +12,11 @@ using namespace QtRedux;
 
 TodosWidget::TodosWidget(QWidget *parent)
     : QWidget(parent)
-    , store()
+    , store(createStore(combineReducers({
+		{ "todos", todos },
+		{ "visibilityFilter", visibilityFilter }
+		})))
 {
-    Reducers reducers;
-    reducers.insert("todos", todos);
-    reducers.insert("visibilityFilter", visibilityFilter);
-    auto reducer = combineReducers(reducers);
-    store = createStore(reducer);
-
     auto addTodoWidget = new AddTodoWidget;
     connect(addTodoWidget, &AddTodoWidget::action,
             store.get(), &Store::dispatch);

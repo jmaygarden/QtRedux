@@ -23,13 +23,22 @@ void Store::replaceReducer(Reducer nextReducer)
     dispatch(Action());
 }
 
-std::shared_ptr<Store> createStore(Reducer reducer,
-                                   State preloadedState,
-                                   Enhancer enhancer)
+std::unique_ptr<Store> createStore(
+    Reducer reducer,
+    State preloadedState,
+    Enhancer enhancer)
 {
-    auto store = std::shared_ptr<Store>(new Store(reducer, preloadedState));
+	if (!enhancer)
+	{
+		return std::unique_ptr<Store>(new Store(reducer, preloadedState));
+	}
 
-    return enhancer ? enhancer(store)(reducer, preloadedState) : store;
+	auto createStore = enhancer([](Reducer reducer, State preloadedState)
+	{
+		return std::unique_ptr<Store>(new Store(reducer, preloadedState));
+	});
+
+	return createStore(reducer, preloadedState);
 }
 
 Reducer combineReducers(Reducers reducers)

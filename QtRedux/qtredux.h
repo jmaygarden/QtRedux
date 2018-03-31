@@ -69,14 +69,14 @@ private:
     State state;
 };
 
-typedef std::function<std::shared_ptr<Store>(Reducer, State)> StateCreator;
+typedef std::function<std::unique_ptr<Store>(Reducer, State)> StateCreator;
 
-typedef std::function<StateCreator(std::shared_ptr<Store>)> Enhancer;
+typedef std::function<StateCreator(StateCreator)> Enhancer;
 
-QTREDUXSHARED_EXPORT std::shared_ptr<Store> createStore(
-        Reducer reducer,
-        State preloadedState = State(),
-        Enhancer enhancer = nullptr);
+QTREDUXSHARED_EXPORT std::unique_ptr<Store> createStore(
+    Reducer reducer,
+    State preloadedState = State(),
+    Enhancer enhancer = nullptr);
 
 QTREDUXSHARED_EXPORT Reducer combineReducers(Reducers reducers);
 
