@@ -28,17 +28,12 @@ std::unique_ptr<Store> createStore(
     State preloadedState,
     Enhancer enhancer)
 {
-	if (!enhancer)
-	{
-		return std::unique_ptr<Store>(new Store(reducer, preloadedState));
-	}
+    auto createStore = [](Reducer reducer, State preloadedState)
+    {
+        return std::unique_ptr<Store>(new Store(reducer, preloadedState));
+    };
 
-	auto createStore = enhancer([](Reducer reducer, State preloadedState)
-	{
-		return std::unique_ptr<Store>(new Store(reducer, preloadedState));
-	});
-
-	return createStore(reducer, preloadedState);
+	return (enhancer ? enhancer(createStore) : createStore)(reducer, preloadedState);
 }
 
 Reducer combineReducers(Reducers reducers)
