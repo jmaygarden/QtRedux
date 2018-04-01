@@ -5,7 +5,7 @@
 
 using namespace QtRedux;
 
-Reducer todos = [](State state, Action action)
+Reducer<QVariant, QVariantMap> todos = [](QVariant state, QVariantMap action)
 {
     switch(action.value("type").toInt())
     {
@@ -51,7 +51,7 @@ Reducer todos = [](State state, Action action)
     }
 };
 
-Reducer visibilityFilter = [](State state, Action action)
+Reducer<QVariant, QVariantMap> visibilityFilter = [](QVariant state, QVariantMap action)
 {
     switch(action.value("type").toInt())
     {
@@ -63,10 +63,10 @@ Reducer visibilityFilter = [](State state, Action action)
     }
 };
 
-QVariantMap getVisibleTodos(State state)
+QVariantMap getVisibleTodos(QVariantMap state)
 {
-    auto visibilityFilter = state.toMap().value("visibilityFilter").toInt();
-    auto todos = state.toMap().value("todos").toMap();
+    auto visibilityFilter = state.value("visibilityFilter").toInt();
+    auto todos = state.value("todos").toMap();
 
     switch(visibilityFilter)
     {

@@ -1,27 +1,27 @@
 #include "actions.h"
 
-using namespace QtRedux;
+#include <QUuid>
 
-Action addTodo(QString const & text)
+QVariantMap addTodo(QString const & text)
 {
-    QtRedux::Action action;
+    QVariantMap action;
     action.insert("type", AddTodo);
     action.insert("id", QUuid::createUuid().toString());
     action.insert("text", text);
     return action;
 }
 
-Action setVisibilityFilter(VisibilityFilter filter)
+QVariantMap setVisibilityFilter(VisibilityFilter filter)
 {
-    QtRedux::Action action;
+    QVariantMap action;
     action.insert("type", SetVisibilityFilter);
     action.insert("filter", filter);
     return action;
 }
 
-Action toggleTodo(QString const & id)
+QVariantMap toggleTodo(QString const & id)
 {
-    QtRedux::Action action;
+    QVariantMap action;
     action.insert("type", ToggleTodo);
     action.insert("id", id);
     return action;

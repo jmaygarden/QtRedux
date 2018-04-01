@@ -1,8 +1,6 @@
 #pragma once
 
-#include <QtRedux>
-
-#include <QtCore/QUuid>
+#include <QVariantMap>
 
 enum Actions
 {
@@ -19,10 +17,10 @@ enum VisibilityFilter
     ShowActive
 };
 
-extern QtRedux::Action addTodo(QString const & text);
+extern QVariantMap addTodo(QString const & text);
 
-extern QtRedux::Action setVisibilityFilter(VisibilityFilter filter);
+extern QVariantMap setVisibilityFilter(VisibilityFilter filter);
 
-extern QtRedux::Action toggleTodo(QString const & id);
+extern QVariantMap toggleTodo(QString const & id);
 
 extern QMap<int, QString> getVisibilityFilters();

@@ -11,5 +11,5 @@ public:
     TodosWidget(QWidget *parent = 0);
 
 private:
-    std::unique_ptr<QtRedux::Store> store;
+    std::unique_ptr<QtRedux::QVariantStore> store;
 };

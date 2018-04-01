@@ -2,8 +2,8 @@
 
 #include <QtRedux>
 
-extern QtRedux::Reducer todos;
+extern QtRedux::Reducer<QVariant, QVariantMap> todos;
 
-extern QtRedux::Reducer visibilityFilter;
+extern QtRedux::Reducer<QVariant, QVariantMap> visibilityFilter;
 
-extern QVariantMap getVisibleTodos(QtRedux::State state);
+extern QVariantMap getVisibleTodos(QVariantMap state);

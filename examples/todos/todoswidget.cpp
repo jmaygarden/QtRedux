@@ -12,25 +12,26 @@ using namespace QtRedux;
 
 TodosWidget::TodosWidget(QWidget *parent)
     : QWidget(parent)
-    , store(createStore(combineReducers({
+    , store(createStore<QVariantStore>(
+        combineReducers({
 		{ "todos", todos },
 		{ "visibilityFilter", visibilityFilter }
 		})))
 {
     auto addTodoWidget = new AddTodoWidget;
     connect(addTodoWidget, &AddTodoWidget::action,
-            store.get(), &Store::dispatch);
+            store.get(), &QVariantStore::dispatch);
 
     auto todoListWidget = new TodoListWidget;
     connect(todoListWidget, &TodoListWidget::action,
-            store.get(), &Store::dispatch);
-    connect(store.get(), &Store::changed,
+            store.get(), &QVariantStore::dispatch);
+    connect(store.get(), &QVariantStore::changed,
             todoListWidget, &TodoListWidget::update);
 
     auto footer = new Footer;
     connect(footer, &Footer::action,
-            store.get(), &Store::dispatch);
-    connect(store.get(), &Store::changed,
+            store.get(), &QVariantStore::dispatch);
+    connect(store.get(), &QVariantStore::changed,
             footer, &Footer::update);
 
     auto layout = new QVBoxLayout;
@@ -39,5 +40,5 @@ TodosWidget::TodosWidget(QWidget *parent)
     layout->addWidget(footer);
     setLayout(layout);
 
-    store->dispatch();
+    store->dispatch(QVariantMap());
 }

@@ -3,8 +3,6 @@
 
 #include <QtWidgets>
 
-using namespace QtRedux;
-
 Footer::Footer(QWidget *parent)
     : QWidget(parent)
     , group(new QButtonGroup)
@@ -29,7 +27,7 @@ Footer::Footer(QWidget *parent)
     });
 }
 
-void Footer::update(QtRedux::State state)
+void Footer::update(QVariant state)
 {
     auto visibilityFilter = state.toMap().value("visibilityFilter").toInt();
 

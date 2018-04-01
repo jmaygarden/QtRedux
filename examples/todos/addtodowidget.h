@@ -1,8 +1,7 @@
 #pragma once
 
+#include <QVariant>
 #include <QWidget>
-
-#include <QtRedux>
 
 class AddTodoWidget : public QWidget
 {
@@ -12,5 +11,5 @@ public:
     explicit AddTodoWidget(QWidget *parent = nullptr);
 
 signals:
-    void action(QtRedux::Action);
+    void action(QVariantMap);
 };

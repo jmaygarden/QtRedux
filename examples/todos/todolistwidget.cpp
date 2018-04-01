@@ -4,8 +4,6 @@
 
 #include <QtWidgets>
 
-using namespace QtRedux;
-
 TodoListWidget::TodoListWidget(QWidget *parent)
     : QWidget(parent)
     , model(new QStandardItemModel)
@@ -25,9 +23,9 @@ TodoListWidget::TodoListWidget(QWidget *parent)
     });
 }
 
-void TodoListWidget::update(State state)
+void TodoListWidget::update(QVariant state)
 {
-    auto todos = getVisibleTodos(state);
+    auto todos = getVisibleTodos(state.toMap());
 
     model->clear();
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QtRedux>
+#include <QVariantMap>
 #include <QWidget>
 
 class QButtonGroup;
@@ -12,10 +12,10 @@ public:
     explicit Footer(QWidget *parent = nullptr);
 
 signals:
-    void action(QtRedux::Action);
+    void action(QVariantMap);
 
 public slots:
-    void update(QtRedux::State state);
+    void update(QVariant state);
 
 private:
     QButtonGroup *group;

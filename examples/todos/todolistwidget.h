@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QtRedux>
+#include <QVariant>
 #include <QWidget>
 
 class QStandardItemModel;
@@ -12,10 +12,10 @@ public:
     explicit TodoListWidget(QWidget *parent = nullptr);
 
 signals:
-    void action(QtRedux::Action);
+    void action(QVariantMap);
 
 public slots:
-    void update(QtRedux::State state);
+    void update(QVariant state);
 
 private:
     QStandardItemModel *model;
